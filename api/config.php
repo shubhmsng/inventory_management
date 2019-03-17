@@ -1,7 +1,8 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
 $method = $_SERVER['REQUEST_METHOD'];
-$data   = $_REQUEST;
+$data   = json_decode(file_get_contents('php://input'), true);
 
 //call database class
 $db_obj = new Database();

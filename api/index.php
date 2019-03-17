@@ -28,12 +28,19 @@ switch ($data['func']) {
         sendResponse($response);
         break;
 
+    case 'updateRecord' :
+        $response = updateRecord($data, $db_obj);
+        sendResponse($response);
+        break;
+    
     case 'addUser' :
         $response = addUser($data, $db_obj);
         sendResponse($response);
-        exit;
+        break;
 
     default:
+        $response = array("httpcode" => "200", "data" => "NULL");
+        sendResponse($response);
         break;
 }
 
