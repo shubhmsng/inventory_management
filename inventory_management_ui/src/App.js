@@ -165,6 +165,42 @@ class App extends Component {
 
   }
 
+  adduser = (username, password, email, new_username, new_password, new_email, new_manager, new_assistant) => {
+    var post_data = {
+      func          : 'addUser',
+      username      : username,
+      password      : password,
+      email         : email,
+      new_user      : {
+        new_username  : new_username,
+        new_password  : new_password,
+        new_email     : new_email,
+        new_manager   : new_manager,
+        new_assistant : new_assistant
+      }
+    };
+    
+    fetch(API, {
+      method: 'post',
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      referrer: "no-referrer",
+      body: JSON.stringify(post_data)
+    }).then(function(response) {
+      return response.json();
+    })
+    .then(function(result) {
+      if(result.httpcode == "200") {
+        alert("user added");
+      } else {
+        alert("failed to add user");
+      }
+    });
+  }
+
   onInputChange = (event) => {
     if(event.target.name == "username") {
       this.setState({username: event.target.value});
@@ -176,7 +212,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.route=="login" ? <Login onInputChange={this.onInputChange} onLoginClick={this.onLoginClick}/> : <Home username = {this.state.username} password = {this.state.password} email = {this.state.email} role = {this.state.role} records = {this.state.records} insertRecord = {this.insertRecord} approveRecord = {this.approveRecord}/>}
+        {this.state.route=="login" ? <Login onInputChange={this.onInputChange} onLoginClick={this.onLoginClick}/> : <Home username = {this.state.username} password = {this.state.password} email = {this.state.email} role = {this.state.role} records = {this.state.records} insertRecord = {this.insertRecord} approveRecord = {this.approveRecord} adduser = {this.adduser}/>}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Table, Button, Modal, Form, Row, Col} from 'react-bootstrap';
 
-const Home = ({username, password, email, role, records, insertRecord, approveRecord}) => {
+const Home = ({username, password, email, role, records, insertRecord, approveRecord, adduser}) => {
     
     if(records != undefined) {
         records = JSON.parse(records);
@@ -12,7 +12,15 @@ const Home = ({username, password, email, role, records, insertRecord, approveRe
                 <h4 className="text-right">Role : {role}</h4>
                 <div className ="text-right m-1">
                     <AddRecord insertRecord={insertRecord} email={email} username={username} password={password}/>
+                    {(role == "Store Manager") ?
+                        <span className ="text-right m-1">
+                        <AddUser adduser = {adduser} email={email} username={username} password={password}/>
+                        </span> : <div></div>
+                    }
                 </div>
+                
+                
+
                 <Table striped bordered hover responsive="sm" variant="dark">
                     <thead>
                         <tr>
@@ -234,6 +242,135 @@ class Pending extends React.Component {
               </Button>
               <Button variant="primary" onClick={this.handleApprove}>
                 Approve
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    }
+}
+
+class AddUser extends React.Component {
+    constructor(props, context) {
+      super(props, context);
+
+      this.state = {
+        show: false,
+        new_username: '',
+        new_password : '',
+        new_email : '',
+        new_manager : 0,
+        new_assistant : 0,
+        new_re_password : ''
+      };
+    }
+  
+    handleClose = () => {
+        this.setState({ show: false });
+    }
+
+    handleShow = () => {
+        this.setState({ show: true });
+    }
+  
+    insertUserData = () => {
+        if(this.state.new_password !== this.state.new_re_password) {
+            alert("password and reentered password not matched");
+            return;
+        }
+        this.setState({ show: false });
+        this.props.adduser(this.props.username, this.props.password, this.props.email, this.state.new_username, this.state.new_password, this.state.new_email, this.state.new_manager, this.state.new_assistant);
+    }
+
+    handleNewUsername = (event) => {
+        this.setState({new_username : event.target.value});
+    }
+
+    handleNewPassword = (event) => {
+        this.setState({new_password : event.target.value});
+    }
+
+    handleNewRePassword = (event) => {
+        this.setState({new_re_password : event.target.value});
+    }
+
+    handleNewEmail = (event) => {
+        this.setState({new_email : event.target.value});
+    }
+
+    handleNewManager = () => {
+        this.setState({new_manager : this.state.new_manager ? 0 : 1});
+    }
+
+    handleNewAssistant = () => {
+        this.setState({new_assistant : this.state.new_assistant ? 0 : 1});
+    }
+  
+    render() {
+      return (
+        <>
+          <Button variant="success" onClick={this.handleShow}>
+            Add User
+          </Button>
+  
+          <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add User</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form className="text-left">
+                    <Form.Group as={Row} controlId="new_username">
+                        <Form.Label column sm="6">Username</Form.Label>
+                        <Col sm="6">
+                        <Form.Control type="text" placeholder="Enter Username" id="new_username" name="new_username" onChange={this.handleNewUsername} required/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="new_email">
+                        <Form.Label column sm="6">Email</Form.Label>
+                        <Col sm="6">
+                        <Form.Control type="email" placeholder="abc@xyz.com" id="new_email" name="new_email" onChange={this.handleNewEmail} required/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="new_password">
+                        <Form.Label column sm="6">Password</Form.Label>
+                        <Col sm="6">
+                        <Form.Control type="password" id="new_password" name="new_password" onChange={this.handleNewPassword} required/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="new_re_password">
+                        <Form.Label column sm="6">Re-Enter Password</Form.Label>
+                        <Col sm="6">
+                        <Form.Control type="password" id="new_re_password" name="new_re_password" onChange={this.handleNewRePassword} required/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="new_manager">
+                        <Form.Label column sm="6">Store Manager</Form.Label>
+                        <Col sm="6">
+                        <Form.Check type="checkbox" id="new_manager" name="new_manager" checked={this.state.new_manager} onChange={this.handleNewManager} required/>
+                        </Col>
+                        
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="new_assistant">
+                        <Form.Label column sm="6">Store Assistant</Form.Label>
+                        <Col sm="6">
+                        <Form.Check type="checkbox"  id="new_assistant" name="new_assistant" checked={this.state.new_assistant} onChange={this.handleNewAssistant} required/>
+                        </Col>
+                        
+                    </Form.Group>
+                    
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={this.insertUserData}>
+                Add
               </Button>
             </Modal.Footer>
           </Modal>

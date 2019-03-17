@@ -106,7 +106,7 @@ function addUser($data, $db_obj) {
         return $login_res;
     }
     
-    $new_user       = json_decode($data['new_user'], true);
+    $new_user       = $data['new_user'];
     $status         = getRole($data, $db_obj);
     $new_username   = $new_user['new_username'];
     $new_password   = hash('sha256', $new_user['new_password']);
