@@ -6,10 +6,6 @@ tables:
 2. roles
 3. inventory_records
 
-user's details:
-1. username : shubhmsng, password: shubh210, email : shubhmsing@gmail.com, role: Store Manager
-2. username : pete, password: pete, email : pete@ucertify.com, role : Store Assistant
-
 database credential:
 user: root
 password: root
