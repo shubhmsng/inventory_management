@@ -1,11 +1,5 @@
 # inventory_management
 
-database name: pinkblue_inventory
-tables:
-1. users
-2. roles
-3. inventory_records
-
 php version : 7.0
 nodejs version : 4.2.6
 npm version: 6.7.0
