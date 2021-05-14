@@ -6,11 +6,6 @@ tables:
 2. roles
 3. inventory_records
 
-database credential:
-user: root
-password: root
-hostname: localhost
-
 php version : 7.0
 nodejs version : 4.2.6
 npm version: 6.7.0
